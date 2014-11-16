@@ -1,4 +1,6 @@
-box: gortazar/wercker-kurento-media-server-box
+box: wercker/default
+service:
+  gortazar/kurento-media-server@0.1.0
 build:
   steps:
     - script:
