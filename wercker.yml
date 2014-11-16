@@ -23,4 +23,4 @@ build:
 
           mavenOpts="$mavenOpts -Djava.security.egd=file:/dev/./urandom"
 
-          mvn --settings $MAVEN_SETTINGS verify -U -am $mavenOpts
+          mvn verify -U -am $mavenOpts
