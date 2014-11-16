@@ -1,0 +1,24 @@
+box: gortazar/wercker-kurento-media-server-box
+build:
+  steps:
+    - script:
+        name: test kurento java W configuration
+        code: |
+          export DISPLAY=:1
+
+          mavenOpts="-pl kurento-integration-tests/kurento-client-test"
+          mavenOpts="$mavenOpts -Dgroups=org.kurento.commons.testing.KurentoClientTests"
+          mavenOpts="$mavenOpts -Dkms.autostart=test"
+          mavenOpts="$mavenOpts -Dkms.transport=ws"
+          mavenOpts="$mavenOpts -Dkms.ws.uri=ws://localhost:9999/kurento"
+          mavenOpts="$mavenOpts -Dkms.http.port=9998"
+
+          mavenOpts="$mavenOpts -Dkms.command=/usr/bin/kurento-media-server"
+          mavenOpts="$mavenOpts -Dkms.gst.plugins=/usr/share/gst-kurento-plugins"
+          mavenOpts="$mavenOpts -Dkurento.test.files=/var/lib/jenkins/test-files"
+          mavenOpts="$mavenOpts -Dkurento.workspace=$WERCKER_ROOT" 
+          mavenOpts="$mavenOpts -Dproject.path=$WERCKER_ROOT/kurento-integration-tests/kurento-client-test"
+
+          mavenOpts="$mavenOpts -Djava.security.egd=file:/dev/./urandom"
+
+          mvn --settings $MAVEN_SETTINGS verify -U -am $mavenOpts
