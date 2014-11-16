@@ -1,4 +1,4 @@
-box: wercker/default
+box: mihkels/java8-oracle@0.0.1
 service:
   gortazar/kurento-media-server@0.1.0
 build:
